@@ -4,6 +4,20 @@ use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 // example data for the dashboard
+ Route::middleware(['guest'])
+        ->prefix('api')
+        ->group(
+         function() {
+
+        Route::namespace('About')
+            ->prefix('about')
+            ->as('about.')
+            ->group(function () {
+                Route::get('about', 'Index')->name('index');
+    });
+});
+
+
 Route::middleware(['web', 'auth'])
     ->namespace('Dashboard')
     ->prefix('dashboard')->as('dashboard.')
@@ -28,5 +42,7 @@ Route::middleware(['auth', 'core'])
     ->group(function () {
         // add your local routes
     });
+
+
 
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
